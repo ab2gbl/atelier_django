@@ -14,11 +14,13 @@ class CoursesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = [
+            "id",
             "branche",
             "name",
             "description",
             "picture",
             "instructor",
+            "tasks"
         ]
     def get_instructor(self, instance):
         return instance.instructor.username
@@ -76,7 +78,6 @@ class PathSerializer(serializers.ModelSerializer):
 
 class CreateCourseSerializer(serializers.ModelSerializer):
     tasks = CreateTaskSerializer(many=True,source="course_tasks")
-    picture = serializers.ImageField(required=False)
     class Meta:
         model = Course
         fields = ['branche','name', 'description','picture',  'tasks']

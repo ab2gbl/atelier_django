@@ -85,7 +85,6 @@ class CreateCourseSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         #create course
         branche_id = validated_data.pop('branche')
-        #branche_instance, _ = Branche.objects.get_or_create(id=branche_id)
         name_instace = validated_data.pop('name')
         description_instace = validated_data.pop('description')
         picture_distance = validated_data.pop('picture')
@@ -99,7 +98,7 @@ class CreateCourseSerializer(serializers.ModelSerializer):
             task_name = task_data.pop('name')
             task_number = task_data.pop('number')
             if task_number != i:
-                raise ValidationError("Task numbers must be in order.")
+                raise serializers.ValidationError("Task numbers must be in order.")
             task = Task.objects.create(name=task_name,number=task_number,course=course)
             
             # create content

@@ -17,6 +17,7 @@ class InstructorSerializer(serializers.ModelSerializer):
         "first_name",
         "last_name",
         "email",
+        
         ]
 
 class DeveloperSerializer(serializers.ModelSerializer):

@@ -39,11 +39,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'courses.apps.CoursesConfig',
     'tasks.apps.TasksConfig',
     'users.apps.UsersConfig',
     'challenges.apps.ChallengesConfig',
 ]
+REST_FRAMEWORK = {
+	 'DEFAULT_AUTHENTICATION_CLASSES': [
+	 	'rest_framework.authentication.TokenAuthentication',
+	 ],
+    # 'DEFAULT_PERMISSION_CLASSES':
+    #     ['rest_framework.permissions.IsAuthenticated'],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,7 +1,15 @@
 from django.db import models
 from users.models import Instructor
+import uuid 
 
 class Path (models.Model):
+    id=models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        primary_key=True,
+        editable=False
+        
+    )
     name = models.CharField(max_length=50)
     description = models.TextField()
     picture = models.ImageField(upload_to='photos/paths/')
@@ -10,6 +18,13 @@ class Path (models.Model):
         return self.name
 
 class Branche (models.Model):
+    id=models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        primary_key=True,
+        editable=False
+        
+    )
     path = models.ForeignKey(Path,related_name='in_the_path',on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     description = models.TextField()
@@ -18,6 +33,12 @@ class Branche (models.Model):
         return self.name
 
 class Course (models.Model):
+    id=models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        primary_key=True,
+        editable=False
+    )
     branche = models.ForeignKey(Branche,related_name='in_the_branche',on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     description = models.TextField()

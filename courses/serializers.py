@@ -88,7 +88,12 @@ class CreateCourseSerializer(serializers.ModelSerializer):
         name_instace = validated_data.pop('name')
         description_instace = validated_data.pop('description')
         picture_distance = validated_data.pop('picture')
-        course = Course.objects.create(branche=branche_id,name=name_instace,description=description_instace,picture=picture_distance)
+        user = self.context['request'].user
+        course = Course.objects.create(branche=branche_id,
+                                       name=name_instace,
+                                       description=description_instace,
+                                       picture=picture_distance,
+                                       instructor=user)
         
         #create tasks
         i=0

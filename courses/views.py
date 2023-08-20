@@ -5,12 +5,13 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status,filters,generics
-from .serializers import CourseSerializer,CoursesSerializer,PathSerializer,PathsSerializer,BrancheSerializer,BranchesSerializer
+from .serializers import *
 #,TextSerializer,TitleSerializer,PictureSerializer,VideoSerializer,FileSerializer,QuestionSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Course
 from .serializers import CourseSerializer
+    
 # Path
 class Paths(generics.ListCreateAPIView):
     queryset = Path.objects.all()
@@ -31,9 +32,14 @@ class Branche(generics.RetrieveUpdateDestroyAPIView):
 class Courses(generics.ListCreateAPIView):
     queryset = Course.objects.all()
     serializer_class = CoursesSerializer
-
+    
+class CreateCourse(generics.ListCreateAPIView):
+    queryset = Course.objects.all()
+    serializer_class = CreateCourseSerializer
+    
 class Course(generics.RetrieveUpdateDestroyAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    
+
+
 

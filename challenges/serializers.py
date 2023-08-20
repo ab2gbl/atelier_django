@@ -32,9 +32,9 @@ class ChallengesSerializer(serializers.ModelSerializer):
         return data
     
 class ChallengeSerializer(serializers.ModelSerializer):
-    tasks = TaskSerializer(many=True, read_only=True)  
+    tasks = TaskSerializer(many=True, read_only=True,source="challenge_tasks")  
     
     class Meta:
         model = Challenge
-        fields = '__all__'
+        fields = ["id","name","description","picture","max_participants","challenge_type","instructor","company","tasks"]
 

@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Task,Title,Picture,File,Question,Text,Video
+from .models import Task,Content,Title,Picture,File,Question,Text,Video
 admin.site.register(Task)
+admin.site.register(Content)
 admin.site.register(Title)
 admin.site.register(Picture)
 admin.site.register(File)

@@ -18,49 +18,88 @@ class Task(models.Model):
         if self.course and self.challenge:
             raise ValueError("A Task cannot have both a Course and a Challenge associated.")
         super(Task, self).save(*args, **kwargs) 
+
+class Content(models.Model):
+    TYPE_CHOICES = [
+        ('title','Title'),
+        ('text', 'Text'),
+        ('picture', 'Picture'),
+        ('video', 'Video'),
+        ('file','File'),
+        ('question','Question')
+        # Add more content types if needed
+    ]
+    
+    task = models.ForeignKey(Task, related_name="contents", on_delete=models.CASCADE)
+    content_type = models.CharField(max_length=25, choices=TYPE_CHOICES)
+    index = models.IntegerField()
+    
+    class Meta:
+        unique_together = ('task', 'index')
+    
+    def __str__(self):
+        return f"Content {self.index} of Task {self.task.name}"
     
 class Title (models.Model):
     title = models.CharField(max_length=50)
-    index = models.IntegerField()
-    task = models.ForeignKey(Task, verbose_name=("of_task"), on_delete=models.CASCADE,null=True,default=None,blank=True)
+    content = models.OneToOneField(Content, on_delete=models.CASCADE,related_name="content_title")
     def __str__(self):		 	
-        return self.task.name + '.' + str(self.index) +'('+self.title+')'
+        return str(self.content)
+    def save(self, *args, **kwargs):
+        if self.content.content_type!='title' :
+            raise ValueError("The content is not of type Title")
+        super(Title, self).save(*args, **kwargs) 
     
 class Text (models.Model):
     text = models.TextField()
-    index = models.IntegerField()
-    task = models.ForeignKey(Task, verbose_name=("of_task"), on_delete=models.CASCADE,null=True,default=None,blank=True)
+    content = models.OneToOneField(Content, on_delete=models.CASCADE,related_name="content_text")
     def __str__(self):		 	
-        return self.task.name + '.' + str(self.index)
+        return str(self.content)
+    def save(self, *args, **kwargs):
+        if self.content.content_type!='text' :
+            raise ValueError("The content is not of type Text")
+        super(Text, self).save(*args, **kwargs) 
     
 class Picture (models.Model):
     picture = models.ImageField(upload_to='photos/')
-    index = models.IntegerField()
-    task = models.ForeignKey(Task, verbose_name=("of_task"), on_delete=models.CASCADE,null=True,default=None,blank=True)
+    content = models.OneToOneField(Content, on_delete=models.CASCADE,related_name="content_picture")
     def __str__(self):		 	
-        return self.task.name + '.' + str(self.index)
+        return str(self.content)
+    def save(self, *args, **kwargs):
+        if self.content.content_type!='picture' :
+            raise ValueError("The content is not of type Picture")
+        super(Picture, self).save(*args, **kwargs) 
     
 class Video (models.Model):
     video = models.FileField(upload_to='videos/') 
-    index = models.IntegerField()
-    task = models.ForeignKey(Task, verbose_name=("of_task"), on_delete=models.CASCADE,null=True,default=None,blank=True)
+    content = models.OneToOneField(Content, on_delete=models.CASCADE,related_name="content_video")
     def __str__(self):		 	
-        return self.task.name + '.' + str(self.index)
+        return str(self.content)
+    def save(self, *args, **kwargs):
+        if self.content.content_type!='video' :
+            raise ValueError("The content is not of type Video")
+        super(Video, self).save(*args, **kwargs) 
     
 class File (models.Model):
     file =  models.FileField(upload_to='files/') 
-    index = models.IntegerField()
-    task = models.ForeignKey(Task, verbose_name=("of_task"), on_delete=models.CASCADE,null=True,default=None,blank=True)
+    content = models.OneToOneField(Content, on_delete=models.CASCADE,related_name="content_file")
     def __str__(self):		 	
-        return self.task.name + '.' + str(self.index)
+        return str(self.content)
+    def save(self, *args, **kwargs):
+        if self.content.content_type!='file' :
+            raise ValueError("The content is not of type File")
+        super(File, self).save(*args, **kwargs) 
     
 class Question (models.Model):
     question = models.TextField()
     solution = models.CharField(max_length=100)
     hint = models.TextField()
     points = models.IntegerField(default=0)
-    index = models.IntegerField()
-    task = models.ForeignKey(Task, verbose_name=("of_task"), on_delete=models.CASCADE,null=True,default=None,blank=True)
+    content = models.OneToOneField(Content, on_delete=models.CASCADE,related_name="content_question")
     def __str__(self):		 	
-        return self.task.name + '.' + str(self.index)
+        return str(self.content)
+    def save(self, *args, **kwargs):
+        if self.content.content_type!='question' :
+            raise ValueError("The content is not of type Question")
+        super(Question, self).save(*args, **kwargs) 
     

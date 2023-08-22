@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import Instructor
+from users.models import Instructor,Developer
 import uuid 
 
 class Path (models.Model):
@@ -10,7 +10,7 @@ class Path (models.Model):
         editable=False
         
     )
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50,unique=True)
     description = models.TextField()
     picture = models.ImageField(upload_to='photos/paths/')
     chef = models.ForeignKey(Instructor, on_delete=models.SET_NULL, null=True, blank=True, related_name='led_paths')
@@ -50,9 +50,18 @@ class Course (models.Model):
 
     
 class Path_Instructor (models.Model):
+    id=models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        primary_key=True,
+        editable=False
+    )
     path = models.ForeignKey(Path, on_delete=models.CASCADE)
-    user = models.ForeignKey(Instructor, on_delete=models.CASCADE)
+    instructor = models.ForeignKey(Instructor, on_delete=models.CASCADE)
     # You can add more fields here, like roles, permissions, etc.
-
+    class Meta:
+        # Define the unique_together constraint to ensure uniqueness of number within the same course or challenge
+        unique_together = [['path', 'instructor']]
     def __str__(self):
-        return f"{self.user.username} - {self.path.name}"
+        return f"{self.instructor.username} - {self.path.name}"
+    

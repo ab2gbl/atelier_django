@@ -12,6 +12,7 @@ class InstructorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Instructor
         fields = [
+            "id",
         "password",
         "username",
         "first_name",

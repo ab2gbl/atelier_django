@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'tasks.apps.TasksConfig',
     'users.apps.UsersConfig',
     'challenges.apps.ChallengesConfig',
+    'participation.apps.ParticipationConfig'
 ]
 REST_FRAMEWORK = {
 	 'DEFAULT_AUTHENTICATION_CLASSES': [

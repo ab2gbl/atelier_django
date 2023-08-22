@@ -1,16 +1,17 @@
 from django.conf import settings
 from rest_framework import serializers
-from .models import Course,Branche,Path
+from .models import *
 from rest_framework import serializers
 from tasks.models import Task
 from tasks.serializers import *
 #,Title,Text,Picture,Video,File,Question
 from django.db import transaction
+from users.serializers import InstructorSerializer
 
         
 class CoursesSerializer(serializers.ModelSerializer):
-    instructor = serializers.SerializerMethodField()
-    tasks = TaskSerializer(many=True, read_only=True, source='course_tasks')
+    instructor = serializers.SerializerMethodField(read_only=True)
+    #tasks = TaskSerializer(many=True, read_only=True, source='course_tasks')
     class Meta:
         model = Course
         fields = [
@@ -20,14 +21,18 @@ class CoursesSerializer(serializers.ModelSerializer):
             "description",
             "picture",
             "instructor",
-            "tasks"
+            #"tasks"
         ]
     def get_instructor(self, instance):
         return instance.instructor.username
 
 class CourseSerializer(serializers.ModelSerializer):
     tasks = TaskSerializer(many=True, read_only=True, source='course_tasks')
-    instructor = serializers.SerializerMethodField()
+    instructor = serializers.SerializerMethodField(read_only=True)
+    branche = serializers.PrimaryKeyRelatedField(queryset=Branche.objects.all(), required=False)
+    name=serializers.CharField(required=False)
+    description=serializers.CharField(required=False)
+    picture=serializers.ImageField(required=False)
     class Meta:
         model = Course
         fields = [
@@ -43,6 +48,7 @@ class CourseSerializer(serializers.ModelSerializer):
             return instance.instructor.username
         else :
             return 0
+
 class BranchesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Branche
@@ -55,42 +61,64 @@ class BrancheSerializer(serializers.ModelSerializer):
         fields = ['path','name','description','picture','courses']  
         
 class PathsSerializer (serializers.ModelSerializer):
-    chef = serializers.SerializerMethodField()
+    chef_username = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Path
-        fields = ['name','description','picture','chef']
-    def get_chef(self, instance):
+        fields = ['id','name','description','picture','chef','chef_username']
+    def get_chef_username(self, instance):
         return instance.chef.username
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if self.context['request'].method in ('GET', 'PUT', 'PATCH'):
+            data.pop('chef')
+        return data
+    
+    def create(self, validated_data):
+        path=Path.objects.create(**validated_data)
+        path_instructor_data = {
+            'instructor': path.chef,  
+            'path': path
+        }
+        Path_Instructor.objects.create(**path_instructor_data)
+        return path   
 
 class PathSerializer(serializers.ModelSerializer):
     branches = BranchesSerializer(many=True, read_only=True,source='in_the_path')  
-    chef = serializers.SerializerMethodField()
+    chef_username = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Path
-        fields = ['name','description','picture','chef','branches'] 
-    
-    def get_chef(self, instance):
+        fields = ['id','name','description','picture','chef','chef_username','branches'] 
+    def get_chef_username(self, instance):
         return instance.chef.username
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if self.context['request'].method in ('GET', 'PUT', 'PATCH'):
+            data.pop('chef')
+        return data
+
     
+   
     
-    
-   #################################################
+#################################################
 
 class CreateCourseSerializer(serializers.ModelSerializer):
     tasks = CreateTaskSerializer(many=True,source="course_tasks")
+    branche_id=serializers.UUIDField(write_only=True)
+    branche=serializers.UUIDField(read_only=True)
     class Meta:
         model = Course
-        fields = ['branche','name', 'description','picture',  'tasks']
+        fields = ['branche','branche_id','name', 'description','picture',  'tasks']
         
     @transaction.atomic
     def create(self, validated_data):
         #create course
-        branche_id = validated_data.pop('branche')
+        branche_id = validated_data.pop('branche_id')
+        branche=Branche.objects.get(id=branche_id)
         name_instace = validated_data.pop('name')
         description_instace = validated_data.pop('description')
         picture_distance = validated_data.pop('picture')
         user = self.context['request'].user
-        course = Course.objects.create(branche=branche_id,
+        course = Course.objects.create(branche=branche,
                                        name=name_instace,
                                        description=description_instace,
                                        picture=picture_distance,
@@ -147,3 +175,29 @@ class CreateCourseSerializer(serializers.ModelSerializer):
                 
         
         return course
+
+class Path_InstructorSerializer(serializers.ModelSerializer):
+    instructor_username = serializers.CharField(write_only=True)
+    instructor = serializers.CharField(read_only=True)
+    
+    path = serializers.CharField(read_only=True)
+    path_name = serializers.CharField(write_only=True)
+    
+    class Meta:
+        model = Path_Instructor
+        fields = ['id','instructor','instructor_username','path','path_name']  
+    def get_instructor(self, instance):
+        return instance.instructor.username
+    def get_path(self, instance):
+        return instance.path.name
+    def create(self, validated_data):
+        instructor_username = validated_data.pop('instructor_username')
+        path_name = validated_data.pop('path_name')
+
+        instructor = Instructor.objects.get(username=instructor_username)
+        path = Path.objects.get(name=path_name)
+
+        path_instructor,created = Path_Instructor.objects.get_or_create(instructor=instructor,path=path)
+        return path_instructor
+    
+#########################################################

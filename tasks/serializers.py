@@ -43,8 +43,9 @@ class ContentSerializer(serializers.ModelSerializer):
         #question
         elif content_type == 'question':
             question_content = Question.objects.get(content=instance)
+            representation['question_id'] = question_content.id  
             representation['question'] = question_content.question  
-            representation['solution'] = question_content.solution
+            #representation['solution'] = question_content.solution
             representation['hint'] = question_content.hint
             representation['points'] = question_content.points
         return representation
@@ -208,3 +209,6 @@ class CreateTaskSerializer(serializers.ModelSerializer):
             
         
         return task
+
+
+

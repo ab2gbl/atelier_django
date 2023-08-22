@@ -8,7 +8,7 @@ from rest_framework import status,filters,generics
 from .serializers import InstructorSerializer,AdminSerializer,DeveloperSerializer,CompanySerializer#,TextSerializer,TitleSerializer,PictureSerializer,VideoSerializer,FileSerializer,QuestionSerializer
 
 # Create your views here.
-class Instructor(generics.CreateAPIView):
+class Instructor(generics.ListCreateAPIView):
     queryset = Instructor.objects.all()
     serializer_class = InstructorSerializer
 class Admin(generics.CreateAPIView):
@@ -20,3 +20,4 @@ class Developer(generics.CreateAPIView):
 class Company(generics.CreateAPIView):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
+

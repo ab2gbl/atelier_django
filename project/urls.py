@@ -9,5 +9,6 @@ urlpatterns = [
     path('challenges/',include('challenges.urls')),
     path('tasks/',include('tasks.urls')),
     path('users/',include('users.urls')),
+    path('participations/',include('participation.urls')),
     path('api-token/',obtain_auth_token)
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

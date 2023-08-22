@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.conf import settings
+import uuid
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def TokenCreate(sender, instance, created, **kwargs):
@@ -18,10 +19,15 @@ class User(AbstractUser):
         DEVELOPER = 'DEVELOPER', 'Developer'
         INSTRUCTOR = 'INSTRUCTOR','Instructor'
         COMPANY = 'COMPANY','Company'
-    
+    id=models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        primary_key=True,
+        editable=False
+    )
     base_role=Role.ADMIN 
     role = models.CharField(max_length=50, choices=Role.choices, blank=True)  # Allow the role field to be blank
-    
+    points= models.PositiveIntegerField(default=0)
     def save(self, *args, **kwargs):
         if not self.role:  # Check if the role field is empty
             self.role = self.base_role  # Set the default role to ADMIN if not provided
@@ -78,3 +84,16 @@ class Company(User):
     student=CompanyManager()
     class Meta:
         proxy = True
+        
+        
+        
+@receiver(post_save, sender=Developer)
+def TokenCreateForDeveloper(sender, instance, created, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
+
+@receiver(post_save, sender=Instructor)
+def TokenCreateForInstructor(sender, instance, created, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
+        

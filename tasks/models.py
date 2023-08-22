@@ -2,8 +2,15 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from courses.models import Course
 from challenges.models import Challenge
+import uuid
 
 class Task(models.Model):
+    id=models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        primary_key=True,
+        editable=False
+    )
     name = models.CharField(max_length=50)
     number = models.IntegerField()
     course = models.ForeignKey(Course, related_name="course_tasks", on_delete=models.CASCADE, null=True, blank=True)
@@ -29,7 +36,12 @@ class Content(models.Model):
         ('question','Question')
         # Add more content types if needed
     ]
-    
+    id=models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        primary_key=True,
+        editable=False
+    )
     task = models.ForeignKey(Task, related_name="contents", on_delete=models.CASCADE)
     content_type = models.CharField(max_length=25, choices=TYPE_CHOICES)
     index = models.IntegerField()
@@ -41,6 +53,12 @@ class Content(models.Model):
         return f"Content {self.index} of Task {self.task.name}"
     
 class Title (models.Model):
+    id=models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        primary_key=True,
+        editable=False
+    )
     title = models.CharField(max_length=50)
     content = models.OneToOneField(Content, on_delete=models.CASCADE,related_name="content_title")
     def __str__(self):		 	
@@ -51,6 +69,12 @@ class Title (models.Model):
         super(Title, self).save(*args, **kwargs) 
     
 class Text (models.Model):
+    id=models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        primary_key=True,
+        editable=False
+    )
     text = models.TextField()
     content = models.OneToOneField(Content, on_delete=models.CASCADE,related_name="content_text")
     def __str__(self):		 	
@@ -61,6 +85,12 @@ class Text (models.Model):
         super(Text, self).save(*args, **kwargs) 
     
 class Picture (models.Model):
+    id=models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        primary_key=True,
+        editable=False
+    )
     picture = models.ImageField(upload_to='photos/')
     content = models.OneToOneField(Content, on_delete=models.CASCADE,related_name="content_picture")
     def __str__(self):		 	
@@ -71,6 +101,12 @@ class Picture (models.Model):
         super(Picture, self).save(*args, **kwargs) 
     
 class Video (models.Model):
+    id=models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        primary_key=True,
+        editable=False
+    )
     video = models.FileField(upload_to='videos/') 
     content = models.OneToOneField(Content, on_delete=models.CASCADE,related_name="content_video")
     def __str__(self):		 	
@@ -81,6 +117,12 @@ class Video (models.Model):
         super(Video, self).save(*args, **kwargs) 
     
 class File (models.Model):
+    id=models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        primary_key=True,
+        editable=False
+    )
     file =  models.FileField(upload_to='files/') 
     content = models.OneToOneField(Content, on_delete=models.CASCADE,related_name="content_file")
     def __str__(self):		 	
@@ -91,6 +133,12 @@ class File (models.Model):
         super(File, self).save(*args, **kwargs) 
     
 class Question (models.Model):
+    id=models.UUIDField(
+        default=uuid.uuid4,
+        unique=True,
+        primary_key=True,
+        editable=False
+    )
     question = models.TextField()
     solution = models.CharField(max_length=100)
     hint = models.TextField()

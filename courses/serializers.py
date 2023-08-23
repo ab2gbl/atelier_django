@@ -6,7 +6,7 @@ from tasks.models import Task
 from tasks.serializers import *
 #,Title,Text,Picture,Video,File,Question
 from django.db import transaction
-from users.serializers import InstructorSerializer
+from users.serializers import InstructorRegistrationSerializer
 
         
 class CoursesSerializer(serializers.ModelSerializer):

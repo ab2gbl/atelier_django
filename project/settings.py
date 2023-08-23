@@ -39,16 +39,25 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'knox',
     'rest_framework.authtoken',
     'courses.apps.CoursesConfig',
     'tasks.apps.TasksConfig',
     'users.apps.UsersConfig',
     'challenges.apps.ChallengesConfig',
-    'participation.apps.ParticipationConfig'
+    'participation.apps.ParticipationConfig',
+    
+    
+    
+    
+    #documentation
+    'drf_yasg',
+    
 ]
 REST_FRAMEWORK = {
 	 'DEFAULT_AUTHENTICATION_CLASSES': [
-	 	'rest_framework.authentication.TokenAuthentication',
+	 	#'rest_framework.authentication.TokenAuthentication',
+	 	'knox.auth.TokenAuthentication',
 	 ],
     # 'DEFAULT_PERMISSION_CLASSES':
     #     ['rest_framework.permissions.IsAuthenticated'],
@@ -113,6 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
 
 
 # Internationalization

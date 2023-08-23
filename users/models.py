@@ -7,13 +7,26 @@ from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.conf import settings
 import uuid
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def TokenCreate(sender, instance, created, **kwargs):
     if created:
         Token.objects.create(user=instance)
         
+class CustomUserManager(BaseUserManager):
+    def create_user(self, username, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError("The Email field must be set")
+        email = self.normalize_email(email)
+        user = self.model(username=username, email=email, **extra_fields)
+        user.set_password(password)  # Properly hash the password
+        user.save(using=self._db)
+        return user
+    
 class User(AbstractUser):
+    objects = CustomUserManager()
     class Role(models.TextChoices):
         ADMIN = 'ADMIN', 'Admin'
         DEVELOPER = 'DEVELOPER', 'Developer'
@@ -52,6 +65,8 @@ class DeveloperManager(BaseUserManager):
     def get_queryset(self, *args, **kwargs):
         result = super().get_queryset(*args, **kwargs)
         return result.filter(role=User.Role.DEVELOPER)
+    
+    
         
 class Developer(User):
     base_role = User.Role.DEVELOPER
@@ -65,6 +80,12 @@ class InstructorManager(BaseUserManager):
     def get_queryset(self, *args, **kwargs):
         result = super().get_queryset(*args, **kwargs)
         return result.filter(role=User.Role.INSTRUCTOR)
+    def create_instructor(self, username, email, password=None, **extra_fields):
+        email = self.normalize_email(email)
+        instructor = self.model(username=username, email=email, **extra_fields)
+        instructor.set_password(password)  # Hashes the password
+        instructor.save(using=self._db)
+        return instructor
         
 class Instructor(User):
     base_role = User.Role.INSTRUCTOR
@@ -78,6 +99,12 @@ class CompanyManager(BaseUserManager):
     def get_queryset(self, *args, **kwargs):
         result = super().get_queryset(*args, **kwargs)
         return result.filter(role=User.Role.COMPANY)
+    def create_company(self, username, email, password=None, **extra_fields):
+        
+        company = self.model(username=username, email=email, **extra_fields)
+        company.set_password(password)  # Hashes the password
+        company.save(using=self._db)
+        return company
         
 class Company(User):
     base_role = User.Role.COMPANY

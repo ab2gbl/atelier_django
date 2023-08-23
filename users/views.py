@@ -5,19 +5,61 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status,filters,generics
-from .serializers import InstructorSerializer,AdminSerializer,DeveloperSerializer,CompanySerializer#,TextSerializer,TitleSerializer,PictureSerializer,VideoSerializer,FileSerializer,QuestionSerializer
+from .serializers import *
 
 # Create your views here.
-class Instructor(generics.ListCreateAPIView):
+class InstructorRegistrationView(generics.CreateAPIView):
     queryset = Instructor.objects.all()
-    serializer_class = InstructorSerializer
-class Admin(generics.CreateAPIView):
+    serializer_class = InstructorRegistrationSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            instructor = serializer.save()
+            return Response({"message": "Instructor registered successfully"}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class AdminRegistrationView(generics.CreateAPIView):
     queryset = Admin.objects.all()
-    serializer_class = AdminSerializer
-class Developer(generics.CreateAPIView):
+    serializer_class = AdminRegistrationSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            admin = serializer.save()
+            return Response({"message": "Admin registered successfully"}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class DeveloperRegistrationView(generics.CreateAPIView):
     queryset = Developer.objects.all()
-    serializer_class = DeveloperSerializer
-class Company(generics.CreateAPIView):
+    serializer_class = DeveloperRegistrationSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            developer = serializer.save()
+            return Response({"message": "Developer registered successfully"}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class CompanyRegistrationView(generics.CreateAPIView):
     queryset = Company.objects.all()
-    serializer_class = CompanySerializer
+    serializer_class = CompanyRegistrationSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            company = serializer.save()
+            return Response({"message": "Company registered successfully"}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class CustomUserRegistrationView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = CustomUserRegistrationSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            return Response({"message": "User registered successfully"}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

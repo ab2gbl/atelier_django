@@ -13,24 +13,54 @@ from . import models as md
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated 
 from .permission import *
+
+
+from drf_spectacular.utils import extend_schema,extend_schema_serializer, OpenApiParameter, OpenApiExample,OpenApiResponse
+from drf_spectacular.types import OpenApiTypes
     
 
 # Path
+
+@extend_schema(
+    description="""
+    This api allow to get paths of the site, and allow to the admin to create a new path"
+    """
+)
 class Paths(generics.ListCreateAPIView):
     queryset = Path.objects.all()
     serializer_class = PathsSerializer
-
+    authentication_classes=[TokenAuthentication]
+    def get_permissions(self):
+        if self.request.method in ['POST']:
+            self.permission_classes = [IsAdminUser]
+        return super().get_permissions()
+    
 class Path(generics.RetrieveUpdateDestroyAPIView):
     queryset = Path.objects.all()
     serializer_class = PathSerializer
+    authentication_classes=[TokenAuthentication]
+    def get_permissions(self):
+        if self.request.method in ['DELETE','PUT','PATCH']:
+            self.permission_classes = [IsAdminUser]
+        return super().get_permissions()
 # Branche
 class Branches(generics.ListCreateAPIView):
     queryset = Branche.objects.all()
     serializer_class = BranchesSerializer
+    authentication_classes=[TokenAuthentication]
+    def get_permissions(self):
+        if self.request.method in ['POST']:
+            self.permission_classes = [IsChefOrAdmin]
+        return super().get_permissions()
 
 class Branche(generics.RetrieveUpdateDestroyAPIView):
     queryset = Branche.objects.all()
     serializer_class = BrancheSerializer
+    authentication_classes=[TokenAuthentication]
+    def get_permissions(self):
+        if self.request.method in ['DELETE','PUT','PATCH']:
+            self.permission_classes = [IsChefOrAdmin]
+        return super().get_permissions()
 # Course.
 class Courses(generics.ListAPIView):
     queryset = Course.objects.all()

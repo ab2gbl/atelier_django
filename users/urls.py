@@ -7,7 +7,7 @@ urlpatterns = [
     path('developer/', views.DeveloperRegistrationView.as_view()),
     path('company/', views.CompanyRegistrationView.as_view()),
     path('admin/', views.AdminRegistrationView.as_view()),
-    path('register/', views.CustomUserRegistrationView.as_view(), name='register'),
+    #path('register/', views.CustomUserRegistrationView.as_view(), name='register'),
    
     
     

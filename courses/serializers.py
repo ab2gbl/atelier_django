@@ -8,7 +8,11 @@ from tasks.serializers import *
 from django.db import transaction
 from users.serializers import InstructorRegistrationSerializer
 
-        
+
+from drf_spectacular.utils import extend_schema,extend_schema_field, OpenApiParameter, OpenApiExample,OpenApiResponse
+from drf_spectacular.types import OpenApiTypes
+    
+
 class CoursesSerializer(serializers.ModelSerializer):
     instructor = serializers.SerializerMethodField(read_only=True)
     #tasks = TaskSerializer(many=True, read_only=True, source='course_tasks')
@@ -61,20 +65,19 @@ class BrancheSerializer(serializers.ModelSerializer):
         fields = ['path','name','description','picture','courses']  
         
 class PathsSerializer (serializers.ModelSerializer):
-    chef_username = serializers.SerializerMethodField(read_only=True)
+    chef = serializers.SerializerMethodField(read_only=True)
+    chef_username = serializers.CharField(required=True,write_only=True)
     class Meta:
         model = Path
         fields = ['id','name','description','picture','chef','chef_username']
-    def get_chef_username(self, instance):
+    def get_chef(self, instance):
         return instance.chef.username
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        if self.context['request'].method in ('GET', 'PUT', 'PATCH'):
-            data.pop('chef')
-        return data
+    
+    
     
     def create(self, validated_data):
-        path=Path.objects.create(**validated_data)
+        chef=Instructor.objects.get(username=validated_data.pop('chef_username'))
+        path=Path.objects.create(chef=chef,**validated_data)
         path_instructor_data = {
             'instructor': path.chef,  
             'path': path

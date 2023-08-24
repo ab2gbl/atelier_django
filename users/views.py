@@ -7,11 +7,20 @@ from rest_framework.views import APIView
 from rest_framework import status,filters,generics
 from .serializers import *
 
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAdminUser,IsAuthenticated
+
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
+from drf_spectacular.types import OpenApiTypes
+
 # Create your views here.
 class InstructorRegistrationView(generics.CreateAPIView):
     queryset = Instructor.objects.all()
     serializer_class = InstructorRegistrationSerializer
-
+    
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAdminUser]
+    
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
@@ -22,7 +31,8 @@ class InstructorRegistrationView(generics.CreateAPIView):
 class AdminRegistrationView(generics.CreateAPIView):
     queryset = Admin.objects.all()
     serializer_class = AdminRegistrationSerializer
-
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAdminUser]
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
@@ -44,7 +54,8 @@ class DeveloperRegistrationView(generics.CreateAPIView):
 class CompanyRegistrationView(generics.CreateAPIView):
     queryset = Company.objects.all()
     serializer_class = CompanyRegistrationSerializer
-
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAdminUser]
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():

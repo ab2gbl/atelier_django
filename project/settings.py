@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'knox',
+    #'knox',
     'rest_framework.authtoken',
     'courses.apps.CoursesConfig',
     'tasks.apps.TasksConfig',
@@ -52,15 +52,23 @@ INSTALLED_APPS = [
     
     #documentation
     'drf_yasg',
+    'drf_spectacular'
     
 ]
 REST_FRAMEWORK = {
 	 'DEFAULT_AUTHENTICATION_CLASSES': [
-	 	#'rest_framework.authentication.TokenAuthentication',
-	 	'knox.auth.TokenAuthentication',
+	 	'rest_framework.authentication.TokenAuthentication',
+	 	#'knox.auth.TokenAuthentication',
 	 ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema'
     # 'DEFAULT_PERMISSION_CLASSES':
     #     ['rest_framework.permissions.IsAuthenticated'],
+}
+SPECTACULAR_SETTINGS = {
+    'TITLE' : "Myproject",
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SERVE_PERMISSIONS': ['rest_framework.permissions.AllowAny'],
+    'SERVE_AUTHENTICATION': [],
 }
 
 MIDDLEWARE = [

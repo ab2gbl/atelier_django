@@ -1,0 +1,2015 @@
+openapi: 3.0.3
+info:
+  title: Myprojectnb1
+  version: 0.0.0
+paths:
+  /api-token/:
+    post:
+      operationId: api_token_create
+      tags:
+      - api-token
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+          description: ''
+  /challenges/challenge/{id}/:
+    get:
+      operationId: challenges_challenge_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - challenges
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Challenge'
+          description: ''
+    put:
+      operationId: challenges_challenge_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - challenges
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Challenge'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Challenge'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Challenge'
+        required: true
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Challenge'
+          description: ''
+    patch:
+      operationId: challenges_challenge_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - challenges
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedChallenge'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedChallenge'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedChallenge'
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Challenge'
+          description: ''
+    delete:
+      operationId: challenges_challenge_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - challenges
+      security:
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /challenges/challenges/:
+    get:
+      operationId: challenges_challenges_list
+      tags:
+      - challenges
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Challenges'
+          description: ''
+    post:
+      operationId: challenges_challenges_create
+      tags:
+      - challenges
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Challenges'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Challenges'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Challenges'
+        required: true
+      security:
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Challenges'
+          description: ''
+  /challenges/createcompetition/:
+    get:
+      operationId: challenges_createcompetition_list
+      tags:
+      - challenges
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CreateCompetition'
+          description: ''
+    post:
+      operationId: challenges_createcompetition_create
+      tags:
+      - challenges
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCompetition'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateCompetition'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateCompetition'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCompetition'
+          description: ''
+  /challenges/createjob/:
+    get:
+      operationId: challenges_createjob_list
+      tags:
+      - challenges
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CreateJob'
+          description: ''
+    post:
+      operationId: challenges_createjob_create
+      tags:
+      - challenges
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateJob'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateJob'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateJob'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateJob'
+          description: ''
+  /courses/branche/{id}/:
+    get:
+      operationId: courses_branche_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - courses
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Branche'
+          description: ''
+    put:
+      operationId: courses_branche_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - courses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Branche'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Branche'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Branche'
+        required: true
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Branche'
+          description: ''
+    patch:
+      operationId: courses_branche_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - courses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedBranche'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBranche'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBranche'
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Branche'
+          description: ''
+    delete:
+      operationId: courses_branche_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - courses
+      security:
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /courses/branches/:
+    get:
+      operationId: courses_branches_list
+      tags:
+      - courses
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Branches'
+          description: ''
+    post:
+      operationId: courses_branches_create
+      tags:
+      - courses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Branches'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Branches'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Branches'
+        required: true
+      security:
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Branches'
+          description: ''
+  /courses/course/{id}/:
+    get:
+      operationId: courses_course_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - courses
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+          description: ''
+    put:
+      operationId: courses_course_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - courses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Course'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Course'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+          description: ''
+    patch:
+      operationId: courses_course_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - courses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCourse'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCourse'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCourse'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+          description: ''
+    delete:
+      operationId: courses_course_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - courses
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /courses/courses/:
+    get:
+      operationId: courses_courses_list
+      tags:
+      - courses
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Courses'
+          description: ''
+  /courses/create_path_instructor/:
+    post:
+      operationId: courses_create_path_instructor_create
+      tags:
+      - courses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Path_Instructor'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Path_Instructor'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Path_Instructor'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Path_Instructor'
+          description: ''
+  /courses/createcourse/:
+    get:
+      operationId: courses_createcourse_list
+      tags:
+      - courses
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CreateCourse'
+          description: ''
+    post:
+      operationId: courses_createcourse_create
+      tags:
+      - courses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCourse'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateCourse'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateCourse'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCourse'
+          description: ''
+  /courses/instructor_paths/{instructor_username}/:
+    get:
+      operationId: courses_instructor_paths_list
+      parameters:
+      - in: path
+        name: instructor_username
+        schema:
+          type: string
+        required: true
+      tags:
+      - courses
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Path_Instructor'
+          description: ''
+  /courses/path/{id}/:
+    get:
+      operationId: courses_path_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - courses
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Path'
+          description: ''
+    put:
+      operationId: courses_path_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - courses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Path'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Path'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Path'
+        required: true
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Path'
+          description: ''
+    patch:
+      operationId: courses_path_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - courses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPath'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPath'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPath'
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Path'
+          description: ''
+    delete:
+      operationId: courses_path_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - courses
+      security:
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /courses/path_instructor/{id}/:
+    get:
+      operationId: courses_path_instructor_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - courses
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Path_Instructor'
+          description: ''
+    put:
+      operationId: courses_path_instructor_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - courses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Path_Instructor'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Path_Instructor'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Path_Instructor'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Path_Instructor'
+          description: ''
+    patch:
+      operationId: courses_path_instructor_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - courses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPath_Instructor'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPath_Instructor'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPath_Instructor'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Path_Instructor'
+          description: ''
+    delete:
+      operationId: courses_path_instructor_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - courses
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /courses/path_instructors/{path_name}/:
+    get:
+      operationId: courses_path_instructors_list
+      parameters:
+      - in: path
+        name: path_name
+        schema:
+          type: string
+        required: true
+      tags:
+      - courses
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Path_Instructor'
+          description: ''
+  /courses/paths/:
+    get:
+      operationId: courses_paths_list
+      tags:
+      - courses
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Paths'
+          description: ''
+    post:
+      operationId: courses_paths_create
+      tags:
+      - courses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Paths'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Paths'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Paths'
+        required: true
+      security:
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paths'
+          description: ''
+  /participations/course_answer/:
+    post:
+      operationId: participations_course_answer_create
+      tags:
+      - participations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course_Answer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Course_Answer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Course_Answer'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course_Answer'
+          description: ''
+  /participations/course_participation/:
+    get:
+      operationId: participations_course_participation_list
+      tags:
+      - participations
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course_Participation'
+          description: ''
+    post:
+      operationId: participations_course_participation_create
+      tags:
+      - participations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course_Participation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Course_Participation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Course_Participation'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course_Participation'
+          description: ''
+  /tasks/content/:
+    get:
+      operationId: tasks_content_list
+      tags:
+      - tasks
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Content'
+          description: ''
+    post:
+      operationId: tasks_content_create
+      tags:
+      - tasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Content'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Content'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Content'
+        required: true
+      security:
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Content'
+          description: ''
+  /tasks/createtask/:
+    post:
+      operationId: tasks_createtask_create
+      tags:
+      - tasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTask'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateTask'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateTask'
+        required: true
+      security:
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTask'
+          description: ''
+  /tasks/task/{id}:
+    get:
+      operationId: tasks_task_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tasks
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+          description: ''
+    delete:
+      operationId: tasks_task_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - tasks
+      security:
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /tasks/tasks/:
+    get:
+      operationId: tasks_tasks_list
+      tags:
+      - tasks
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tasks'
+          description: ''
+    post:
+      operationId: tasks_tasks_create
+      tags:
+      - tasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tasks'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Tasks'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tasks'
+        required: true
+      security:
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tasks'
+          description: ''
+  /tasks/title/:
+    get:
+      operationId: tasks_title_list
+      tags:
+      - tasks
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Title'
+          description: ''
+    post:
+      operationId: tasks_title_create
+      tags:
+      - tasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Title'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Title'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Title'
+        required: true
+      security:
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Title'
+          description: ''
+  /users/admin/:
+    post:
+      operationId: users_admin_create
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminRegistration'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminRegistration'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminRegistration'
+        required: true
+      security:
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminRegistration'
+          description: ''
+  /users/company/:
+    post:
+      operationId: users_company_create
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyRegistration'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CompanyRegistration'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CompanyRegistration'
+        required: true
+      security:
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyRegistration'
+          description: ''
+  /users/developer/:
+    post:
+      operationId: users_developer_create
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeveloperRegistration'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DeveloperRegistration'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DeveloperRegistration'
+        required: true
+      security:
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeveloperRegistration'
+          description: ''
+  /users/instructor/:
+    post:
+      operationId: users_instructor_create
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InstructorRegistration'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/InstructorRegistration'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/InstructorRegistration'
+        required: true
+      security:
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstructorRegistration'
+          description: ''
+  /users/register/:
+    post:
+      operationId: users_register_create
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomUserRegistration'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CustomUserRegistration'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CustomUserRegistration'
+        required: true
+      security:
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomUserRegistration'
+          description: ''
+components:
+  schemas:
+    AdminRegistration:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        password:
+          type: string
+          writeOnly: true
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+      required:
+      - password
+      - username
+    AuthToken:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        token:
+          type: string
+          readOnly: true
+      required:
+      - password
+      - token
+      - username
+    BlankEnum:
+      enum:
+      - ''
+    Branche:
+      type: object
+      properties:
+        path:
+          type: string
+          format: uuid
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        picture:
+          type: string
+          format: uri
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Courses'
+          readOnly: true
+      required:
+      - courses
+      - description
+      - name
+      - path
+      - picture
+    Branches:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        picture:
+          type: string
+          format: uri
+        path:
+          type: string
+          format: uuid
+      required:
+      - description
+      - id
+      - name
+      - path
+      - picture
+    Challenge:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        picture:
+          type: string
+          format: uri
+        max_participants:
+          type: integer
+        challenge_type:
+          oneOf:
+          - $ref: '#/components/schemas/ChallengeTypeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        instructor:
+          type: string
+          format: uuid
+          nullable: true
+        company:
+          type: string
+          format: uuid
+          nullable: true
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+          readOnly: true
+      required:
+      - description
+      - id
+      - max_participants
+      - name
+      - picture
+      - tasks
+    ChallengeTypeEnum:
+      enum:
+      - JOB
+      - COMPETITION
+      type: string
+      description: |-
+        * `JOB` - Job
+        * `COMPETITION` - Competition
+    Challenges:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        picture:
+          type: string
+          format: uri
+        max_participants:
+          type: integer
+        challenge_type:
+          oneOf:
+          - $ref: '#/components/schemas/ChallengeTypeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        instructor:
+          type: string
+          format: uuid
+          nullable: true
+        company:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+      - description
+      - id
+      - max_participants
+      - name
+      - picture
+    CompanyRegistration:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        password:
+          type: string
+          writeOnly: true
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+      required:
+      - password
+      - username
+    Content:
+      type: object
+      properties:
+        index:
+          type: integer
+        content_type:
+          $ref: '#/components/schemas/ContentTypeEnum'
+      required:
+      - content_type
+      - index
+    ContentTypeEnum:
+      enum:
+      - title
+      - text
+      - picture
+      - video
+      - file
+      - question
+      type: string
+      description: |-
+        * `title` - Title
+        * `text` - Text
+        * `picture` - Picture
+        * `video` - Video
+        * `file` - File
+        * `question` - Question
+    Course:
+      type: object
+      properties:
+        branche:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        picture:
+          type: string
+          format: uri
+        instructor:
+          type: string
+          readOnly: true
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+          readOnly: true
+      required:
+      - instructor
+      - tasks
+    Course_Answer:
+      type: object
+      properties:
+        question_id:
+          type: string
+          format: uuid
+          writeOnly: true
+        answer:
+          type: string
+          writeOnly: true
+        message:
+          type: string
+          readOnly: true
+      required:
+      - answer
+      - message
+      - question_id
+    Course_Participation:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        course:
+          type: string
+          readOnly: true
+        course_name:
+          type: string
+          writeOnly: true
+        developer:
+          type: string
+          readOnly: true
+        is_finished:
+          type: boolean
+          readOnly: true
+        tasks:
+          type: string
+          readOnly: true
+      required:
+      - course
+      - course_name
+      - developer
+      - id
+      - is_finished
+      - tasks
+    Courses:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        branche:
+          type: string
+          format: uuid
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+        picture:
+          type: string
+          format: uri
+        instructor:
+          type: string
+          readOnly: true
+      required:
+      - branche
+      - description
+      - id
+      - instructor
+      - name
+      - picture
+    CreateCompetition:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        picture:
+          type: string
+          format: uri
+        max_participants:
+          type: integer
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateTask'
+      required:
+      - description
+      - max_participants
+      - name
+      - picture
+      - tasks
+    CreateContent:
+      type: object
+      properties:
+        content_type:
+          $ref: '#/components/schemas/ContentTypeEnum'
+        index:
+          type: integer
+        title:
+          type: string
+        text:
+          type: string
+        picture:
+          type: string
+          format: uri
+        video:
+          type: string
+          format: uri
+        file:
+          type: string
+          format: uri
+        question:
+          type: string
+        solution:
+          type: string
+        hint:
+          type: string
+        points:
+          type: integer
+      required:
+      - content_type
+      - index
+    CreateCourse:
+      type: object
+      properties:
+        branche:
+          type: string
+          format: uuid
+          readOnly: true
+        branche_id:
+          type: string
+          format: uuid
+          writeOnly: true
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+        picture:
+          type: string
+          format: uri
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateTask'
+      required:
+      - branche
+      - branche_id
+      - description
+      - name
+      - picture
+      - tasks
+    CreateJob:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        picture:
+          type: string
+          format: uri
+        max_participants:
+          type: integer
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateTask'
+      required:
+      - description
+      - max_participants
+      - name
+      - picture
+      - tasks
+    CreateTask:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        number:
+          type: integer
+        contents:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateContent'
+      required:
+      - contents
+      - name
+      - number
+    CustomUserRegistration:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        password:
+          type: string
+          writeOnly: true
+      required:
+      - password
+      - username
+    DeveloperRegistration:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        password:
+          type: string
+          writeOnly: true
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+      required:
+      - password
+      - username
+    InstructorRegistration:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        password:
+          type: string
+          writeOnly: true
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+      required:
+      - password
+      - username
+    PatchedBranche:
+      type: object
+      properties:
+        path:
+          type: string
+          format: uuid
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        picture:
+          type: string
+          format: uri
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Courses'
+          readOnly: true
+    PatchedChallenge:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        picture:
+          type: string
+          format: uri
+        max_participants:
+          type: integer
+        challenge_type:
+          oneOf:
+          - $ref: '#/components/schemas/ChallengeTypeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        instructor:
+          type: string
+          format: uuid
+          nullable: true
+        company:
+          type: string
+          format: uuid
+          nullable: true
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+          readOnly: true
+    PatchedCourse:
+      type: object
+      properties:
+        branche:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        picture:
+          type: string
+          format: uri
+        instructor:
+          type: string
+          readOnly: true
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+          readOnly: true
+    PatchedPath:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        picture:
+          type: string
+          format: uri
+        chef:
+          type: string
+          format: uuid
+          nullable: true
+        chef_username:
+          type: string
+          readOnly: true
+        branches:
+          type: array
+          items:
+            $ref: '#/components/schemas/Branches'
+          readOnly: true
+    PatchedPath_Instructor:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        instructor:
+          type: string
+          readOnly: true
+        instructor_username:
+          type: string
+          writeOnly: true
+        path:
+          type: string
+          readOnly: true
+        path_name:
+          type: string
+          writeOnly: true
+    Path:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        picture:
+          type: string
+          format: uri
+        chef:
+          type: string
+          format: uuid
+          nullable: true
+        chef_username:
+          type: string
+          readOnly: true
+        branches:
+          type: array
+          items:
+            $ref: '#/components/schemas/Branches'
+          readOnly: true
+      required:
+      - branches
+      - chef_username
+      - description
+      - id
+      - name
+      - picture
+    Path_Instructor:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        instructor:
+          type: string
+          readOnly: true
+        instructor_username:
+          type: string
+          writeOnly: true
+        path:
+          type: string
+          readOnly: true
+        path_name:
+          type: string
+          writeOnly: true
+      required:
+      - id
+      - instructor
+      - instructor_username
+      - path
+      - path_name
+    Paths:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        picture:
+          type: string
+          format: uri
+        chef:
+          type: string
+          format: uuid
+          nullable: true
+        chef_username:
+          type: string
+          readOnly: true
+      required:
+      - chef_username
+      - description
+      - id
+      - name
+      - picture
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        number:
+          type: integer
+        contents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Content'
+          readOnly: true
+      required:
+      - contents
+      - id
+      - name
+      - number
+    Tasks:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        number:
+          type: integer
+        course:
+          type: string
+          format: uuid
+          nullable: true
+        challenge:
+          type: string
+          format: uuid
+          nullable: true
+        contents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Content'
+          readOnly: true
+      required:
+      - challenge
+      - contents
+      - course
+      - id
+      - name
+      - number
+    Title:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 50
+      required:
+      - title
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"

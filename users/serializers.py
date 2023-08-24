@@ -1,5 +1,6 @@
 from rest_framework import serializers, validators
 from .models import Instructor,Developer,Admin,Company,User
+from rest_framework.authtoken.models import Token
 #,Title,Text,Picture,Video,File,Question
 
 
@@ -19,6 +20,8 @@ class InstructorRegistrationSerializer(serializers.ModelSerializer):
         instructor = Instructor.objects.create(**validated_data)
         instructor.set_password(password)
         instructor.save()
+        token = Token.objects.create(instructor)
+        
         return instructor
 
 class DeveloperRegistrationSerializer(serializers.ModelSerializer):
@@ -32,6 +35,8 @@ class DeveloperRegistrationSerializer(serializers.ModelSerializer):
         developer = Developer.objects.create(**validated_data)
         developer.set_password(password)
         developer.save()
+        token = Token.objects.create(developer)
+        
         return developer
         
 class AdminRegistrationSerializer(serializers.ModelSerializer):
@@ -45,6 +50,7 @@ class AdminRegistrationSerializer(serializers.ModelSerializer):
         admin = Admin.objects.create(**validated_data)
         admin.set_password(password)
         admin.save()
+        token = Token.objects.create(admin)
         return admin
         
 class CompanyRegistrationSerializer(serializers.ModelSerializer):
@@ -58,7 +64,10 @@ class CompanyRegistrationSerializer(serializers.ModelSerializer):
         company = Company.objects.create(**validated_data)
         company.set_password(password)
         company.save()
+        token = Token.objects.create(company)
+        
         return company
+    
         
 from rest_framework import serializers
 from .models import User
